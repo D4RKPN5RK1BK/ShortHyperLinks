@@ -15,8 +15,8 @@
         @foreach(var l in Model)
         {
         <tr>
-            <td>@l.Link</td>
-            <td>@l.ShortLink</td>
+            <td><a href="@l.Link" target="_blank">@l.Link</a></td>
+            <td><a href="@l.ShortLink" target="_blank">@l.ShortLink</a></td>
             <td>@l.Created</td>
             <td>@l.Clicks</td>
         </tr>
