@@ -1,4 +1,52 @@
-﻿@{
+﻿@model IEnumerable<HyperLink>
+@{
     Layout = "_Layout";
 }
-<h2>Edit page</h2>
+@*<partial name="Create" />*@
+<div id="hyper-links">
+    @foreach (var l in Model)
+    {
+        <partial name="Edit" model="l" />
+    }
+</div>
+
+@section Scripts {
+<script>
+
+    // Изменение ссылки
+    $("body").on("change", "input[name='Link']", function () {
+        const model = {
+            id: $(this).parents("div[name='hyper-link-data']").find("input[name='Id']").val(),
+            link: $(this).parents("div[name='hyper-link-data']").find("input[name='Link']").val()
+        }
+
+        fetch("hyperlink/edit", {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(model)
+        })
+            .then(res => res.text())
+            .then(res => {
+                $(this).parents("div[name='hyper-link-data']").html(res);
+            });
+    });
+
+    // Удаление
+    $("body").on("click", "button[name='delete-link']", function () {
+
+        fetch("hyperlink/delete", {
+            method: "DELETE",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify($(this).parents("div[name='hyper-link-data']").find("input[name='Id']").val())
+        })
+            .then(res => res.text())
+            .then(res => {
+                $(this).parents("div[name='hyper-link-data']").remove();
+            });
+    });
+</script>
+}

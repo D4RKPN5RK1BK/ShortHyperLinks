@@ -1,0 +1,12 @@
+﻿@model HyperLink
+<div name="hyper-link-data" class="mb-2">
+    <div class="input-group" >
+        <input class="form-control sm form-control-sm" asp-for="Link" />
+        <input type="hidden" asp-for="Id"/>
+        <span class="input-group-text">
+            <a href="@Model.ShortLink" target="_blank">@Model.ShortLink</a>
+        </span>
+        <button type="button" class="btn btn-danger btn-sm " name="delete-link">Удалить</button>
+    </div>
+    <span asp-validation-for="Link" class="text-danger"></span>
+</div>

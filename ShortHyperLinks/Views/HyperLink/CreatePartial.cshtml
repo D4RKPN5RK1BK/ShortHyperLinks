@@ -1,0 +1,33 @@
+﻿@model HyperLink?
+<div id="create-link-block">
+    <div id="create-form">
+    <div class="card mb-3">
+        <div class="card-header">
+            Новая ссылка
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-8 col-12 mb-2">
+                    <input type="text" class="form-control form-control-sm" name="hyper-link" id="new-hyper-link"/>
+                    <span asp-validation-for="Link" class="text-danger"></span>
+                </div>
+                <div class="col-sm-4 col-12 mb-2">
+                    <button class="btn btn-success btn-sm col-12" name="create-link" id="create-link">Создать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div id="success-link-create">
+        @if(Model?.ShortLink!=null && !String.IsNullOrEmpty(Model.ShortLink))
+        {
+            <div class="card mb-3">
+            <div class="card-body">
+                <p>Сокращенная сылка <a href="@Model.Link" target="_blank">@Model.Link</a> была успешно создана!</p>
+                <p><a target="_blank" href="@Model.ShortLink">@Model.ShortLink</a></p>
+            </div>
+        </div> 
+        }
+    </div>
+</div>
+    

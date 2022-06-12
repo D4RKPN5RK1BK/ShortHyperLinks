@@ -1,4 +1,25 @@
-﻿@{
+﻿@model IEnumerable<HyperLink>
+@{
     Layout = "_Layout";
 }
-<h2>Index page</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Изначальная ссылка</th>
+            <th>Короткая ссылка</th>
+            <th>Дата создания</th>
+            <th>Колчество просмотров</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var l in Model)
+        {
+        <tr>
+            <td>@l.Link</td>
+            <td>@l.ShortLink</td>
+            <td>@l.Created</td>
+            <td>@l.Clicks</td>
+        </tr>
+        }
+    </tbody>
+</table>

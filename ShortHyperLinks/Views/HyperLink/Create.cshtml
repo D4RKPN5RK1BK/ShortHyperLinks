@@ -1,0 +1,33 @@
+﻿@model HyperLink?
+@{
+    Layout = "_Layout";
+}
+<partial name="CreatePartial" />
+
+
+@section Scripts {
+    <script>
+        // Создание ссылки
+    $("body").on("click", "#create-link", function() {
+        const model = {
+            id: 0,
+            clicks: 0,
+            shortLink: "",
+            link: $("#new-hyper-link").val()
+        }
+
+        fetch("/hyperlink/create", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(model)
+        })
+            .then(res => res.text())
+            .then(res => {
+                $("#create-link-block").html(res);
+            });
+    });
+    </script>
+}
+    

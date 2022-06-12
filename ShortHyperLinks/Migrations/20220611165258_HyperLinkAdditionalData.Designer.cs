@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShortHyperLinks.Data;
 
@@ -10,20 +11,21 @@ using ShortHyperLinks.Data;
 namespace ShortHyperLinks.Migrations
 {
     [DbContext(typeof(SHLContext))]
-    partial class SHLContextModelSnapshot : ModelSnapshot
+    [Migration("20220611165258_HyperLinkAdditionalData")]
+    partial class HyperLinkAdditionalData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("ShortHyperLinks.Models.HyperLink", b =>
+            modelBuilder.Entity("ShortHyperLinks.Data.HyperLink", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Clicks")
                         .HasColumnType("int");
@@ -31,7 +33,10 @@ namespace ShortHyperLinks.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Link")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("OriginalLink")
                         .IsRequired()
                         .HasColumnType("longtext");
 

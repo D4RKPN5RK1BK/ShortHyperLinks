@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShortHyperLinks.Data;
 
@@ -10,9 +11,10 @@ using ShortHyperLinks.Data;
 namespace ShortHyperLinks.Migrations
 {
     [DbContext(typeof(SHLContext))]
-    partial class SHLContextModelSnapshot : ModelSnapshot
+    [Migration("20220612102622_RemovedIsActiveFromLinks")]
+    partial class RemovedIsActiveFromLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,9 +23,9 @@ namespace ShortHyperLinks.Migrations
 
             modelBuilder.Entity("ShortHyperLinks.Models.HyperLink", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Clicks")
                         .HasColumnType("int");
@@ -31,7 +33,7 @@ namespace ShortHyperLinks.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Link")
+                    b.Property<string>("OriginalLink")
                         .IsRequired()
                         .HasColumnType("longtext");
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShortHyperLinks.Data;
+using ShortHyperLinks.Models;
 
 namespace ShortHyperLinks.Controllers
 {
@@ -14,7 +15,8 @@ namespace ShortHyperLinks.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<HyperLink> model = _context.HyperLinks;
+            return View(model);
         }
     }
 }
