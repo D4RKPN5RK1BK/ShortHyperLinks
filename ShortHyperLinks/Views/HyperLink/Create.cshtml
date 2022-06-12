@@ -11,10 +11,9 @@
     $("body").on("click", "#create-link", function() {
         const model = {
             id: 0,
-            clicks: 0,
-            shortLink: "",
             link: $("#new-hyper-link").val()
         }
+        console.log(model);
 
         fetch("/hyperlink/create", {
             method: "POST",
