@@ -11,6 +11,7 @@ namespace ShortHyperLinks.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле с изначальной ссылкой не может быть пустым!")]
         public string Link { get; set; }
         public string ShortLink { get; set; }
+        public string Hash { get; set; }
         public int Clicks { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }

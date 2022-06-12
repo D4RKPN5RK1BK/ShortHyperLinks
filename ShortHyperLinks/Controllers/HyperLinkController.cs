@@ -13,6 +13,7 @@ namespace ShortHyperLinks.Controllers
             _context = context;
         }
 
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,7 +36,7 @@ namespace ShortHyperLinks.Controllers
                     return PartialView("CreatePartial", _context.HyperLinks.First(o => o.Link == model.Link));
 
                 model.Clicks = 0;
-                model.ShortLink = $"{Request.Host}/hyperlink/link/{Guid.NewGuid()}";
+                model.ShortLink = $"{Request.Host}/link/{Guid.NewGuid()}";
                 model.Created = DateTime.Now;
                 model.Updated = DateTime.Now;
                 _context.Add(model);
@@ -86,6 +87,16 @@ namespace ShortHyperLinks.Controllers
                 return PartialView(_context.HyperLinks.First(o => o.Id == id));
             }
             return NotFound();
+        }
+
+        [Route("/link/{id?}")]
+        public IActionResult Redirect(string id)
+        {
+            HyperLink link = _context.HyperLinks.First(o => o.Id == 1);
+            link.Clicks++;
+            _context.Update(link);
+            _context.SaveChanges();
+            return Redirect(link.Link);
         }
 
     }

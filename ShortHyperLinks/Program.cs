@@ -14,6 +14,7 @@ app.UseRouting();
 app.UseEndpoints(configure =>
 {
     configure.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+    configure.MapControllerRoute("links", "/link/{id?}", defaults: new {controller = "HyperLink", action = "Redirect"});
 });
 
 app.Run();
