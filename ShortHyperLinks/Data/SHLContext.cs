@@ -8,7 +8,7 @@ namespace ShortHyperLinks.Data
         public DbSet<HyperLink> HyperLinks { get; set; }
         public SHLContext(DbContextOptions<SHLContext> options) : base(options)
         {
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder buidler)

@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using ShortHyperLinks.Data;
+using ShortHyperLinks.Models;
+using ShortHyperLinks.Models.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 string connection = builder.Configuration.GetConnectionString("DefaultMySQL");
