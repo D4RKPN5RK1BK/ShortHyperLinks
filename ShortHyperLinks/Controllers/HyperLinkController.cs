@@ -13,6 +13,7 @@ namespace ShortHyperLinks.Controllers
             _context = context;
         }
 
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -27,22 +28,22 @@ namespace ShortHyperLinks.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]HyperLink model)
+        public IActionResult Create([FromBody]HyperLinkForm model)
         {
+            
             if (ModelState.IsValid)
             {
                 if (_context.HyperLinks.Any(o => o.Link == model.Link))
                     return PartialView("CreatePartial", _context.HyperLinks.First(o => o.Link == model.Link));
 
-                model.Clicks = 0;
-                model.ShortLink = $"{Request.Host}/hyperlink/link/{Guid.NewGuid()}";
-                model.Created = DateTime.Now;
-                model.Updated = DateTime.Now;
-                _context.Add(model);
+                HyperLink link = new HyperLink(model.Link, Request.Host);
+                
+                _context.Add(link);
                 _context.SaveChanges();
-                return PartialView("CreatePartial", model);
+
+                return PartialView("CreatePartial", link);
             }
-            return PartialView("CreatePartial", model);
+            return PartialView("CreatePartial", new HyperLink());
         }
 
         [HttpGet]
@@ -58,8 +59,8 @@ namespace ShortHyperLinks.Controllers
             if (ModelState.IsValid)
             {
                 link.Link = model.Link;
-                link.Updated = DateTime.Now;
-                link.Clicks = 0;
+                link.ShortLink = $"{Request.Host}/link/{link.Hash}";
+
                 _context.HyperLinks.Update(link);
                 _context.SaveChanges();
             }
@@ -78,12 +79,18 @@ namespace ShortHyperLinks.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        public IActionResult Read(int id)
+        [Route("/link/{id?}")]
+        public IActionResult RedirectToURL(string id)
         {
-            if (_context.HyperLinks.Any(o => o.Id == id))
+            if (_context.HyperLinks.Any(o => o.Hash == id))
             {
-                return PartialView(_context.HyperLinks.First(o => o.Id == id));
+                HyperLink link = _context.HyperLinks.First(o => o.Hash == id);
+
+                link.Clicks++;
+                
+                _context.Update(link);
+                _context.SaveChanges();
+                return Redirect(link.Link);
             }
             return NotFound();
         }

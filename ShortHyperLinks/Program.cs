@@ -1,11 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using ShortHyperLinks.Data;
+using ShortHyperLinks.Models;
+using ShortHyperLinks.Models.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 string connection = builder.Configuration.GetConnectionString("DefaultMySQL");
+ServerVersion dbVersion = new MySqlServerVersion(new Version(10, 6, 8));
+Action<MySqlDbContextOptionsBuilder> action;
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<SHLContext>(o => o.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 29))));
+builder.Services.AddDbContext<SHLContext>(o => o.UseMySql(connection, dbVersion));
 
 var app = builder.Build();
 
@@ -14,6 +20,7 @@ app.UseRouting();
 app.UseEndpoints(configure =>
 {
     configure.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+    configure.MapControllerRoute("links", "/link/{id?}", defaults: new {controller = "HyperLink", action = "RedirectToURL" });
 });
 
 app.Run();
